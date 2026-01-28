@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div style="text-align: center; margin-top: 50px;">
+    <h1 class="glitch" data-text="ORDER CONFIRMED!!!" style="font-size: 4rem; color: #ff00ff;">ORDER CONFIRMED!!!</h1>
+    <h1 style="font-size: 6rem;">🎉 🛒 🚀</h1>
+
+    <div
+        style="background: #fff; border: 5px solid #000; padding: 30px; margin: 30px auto; max-width: 600px; transform: rotate(2deg); box-shadow: 10px 10px 0 #00ff00;">
+        <h2>Thank you for your purchase!</h2>
+        <p style="font-size: 1.5rem;">Your digital goodies are being teleported to:</p>
+
+        <div
+            style="background: #000; color: #00ff00; font-family: 'Courier New', monospace; padding: 20px; font-size: 2rem; margin: 20px 0;">
+            {{ ip }}
+        </div>
+
+        <p>🚚💨 <br> (Look out your window!)</p>
+    </div>
+
+    <a href="/" class="btn-buy" style="background: yellow;">BUY MORE STUFF</a>
+</div>
+{% endblock %}

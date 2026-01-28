@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<h1 style="text-align: center; margin-top: 100px; font-size: 3rem;" class="glitch"
+    data-text="Welcome to the Simulation">Welcome to the Simulation</h1>
+<p style="text-align: center; opacity: 0.7;">Consuming is participating.</p>
+
+<div class="product-grid">
+    {% for product in products %}
+    <a href="{{ url_for('product_detail', product_id=product.id) }}" class="product-card">
+        {% if product.type %}
+        <span class="product-tag">{{ product.type }}</span>
+        {% endif %}
+        <!-- Placeholder Images or real ones if provided -->
+        <img src="{{ product.image_url if product.image_url else 'https://placehold.co/400x300/111/eee?text=' ~ product.name }}"
+            alt="{{ product.name }}" class="product-image">
+        <h2 class="product-title">{{ product.name }}</h2>
+        <div class="product-price">{{ product.price }} {{ store.currency }}</div>
+    </a>
+    {% endfor %}
+</div>
+{% endblock %}
