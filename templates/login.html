@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div
+    style="max-width: 400px; margin: 50px auto; padding: 20px; border: 1px solid #ccc; background: rgba(0,0,0,0.8); color: white;">
+    <h2 style="text-align: center;">Admin Access</h2>
+    {% if error %}
+    <p style="color: red; text-align: center;">{{ error }}</p>
+    {% endif %}
+    <form method="POST" action="{{ url_for('auth.login', next=request.args.get('next')) }}">
+        <div style="margin-bottom: 15px;">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" required
+                style="width: 100%; padding: 8px; margin-top: 5px; color: black;">
+        </div>
+        <div style="margin-bottom: 15px;">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required
+                style="width: 100%; padding: 8px; margin-top: 5px; color: black;">
+        </div>
+        <button type="submit"
+            style="width: 100%; padding: 10px; background: #0f0; color: black; font-weight: bold; border: none; cursor: pointer;">ENTER</button>
+    </form>
+    <div style="margin-top: 15px; text-align: center;">
+        <a href="{{ url_for('auth.register') }}" style="color: #0f0;">New Entity? Register Here</a>
+    </div>
+</div>
+{% endblock %}

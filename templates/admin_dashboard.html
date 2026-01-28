@@ -1,0 +1,162 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+
+<div class="admin-container fade-in">
+    <div class="admin-header">
+        <div>
+            <h1 class="glitch-text" data-text="MASTER CONTROL">MASTER CONTROL</h1>
+            <div class="system-status">SYSTEM STATUS: ONLINE</div>
+        </div>
+        <a href="{{ url_for('auth.logout') }}" class="logout-btn">DISCONNECT AGENT</a>
+    </div>
+
+    <div class="stats-grid">
+        <div class="stat-card">
+            <h3>Total Revenue</h3>
+            <p class="stat-value">{{ total_revenue }}</p>
+        </div>
+        <div class="stat-card">
+            <h3>Total Orders</h3>
+            <p class="stat-value">{{ total_orders }}</p>
+        </div>
+        <div class="stat-card">
+            <h3>Active Agents</h3>
+            <p class="stat-value">{{ total_users }}</p>
+        </div>
+    </div>
+
+    <!-- Analytics Section -->
+    <div class="analytics-grid">
+        <div class="data-section">
+            <h3 class="section-title">Top Selling Agents</h3>
+
+            <table class="admin-table" id="earners-table">
+                <thead>
+                    <tr>
+                        <th onclick="sortTable('earners-table', 0)">Agent Name ⬍</th>
+                        <th onclick="sortTable('earners-table', 1, true)" style="text-align: right;">Earnings ⬍</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for earner in top_earners %}
+                    <tr>
+                        <td>{{ earner[0] }}</td>
+                        <td style="text-align: right;">
+                            <div class="bar-container">
+                                <div class="visual-bar" style="width: {{ (earner[1] / max_earnings) * 100 }}%;"></div>
+                                <span class="bar-value">{{ earner[1] }}</span>
+                            </div>
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="2">No data available.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="data-section">
+            <h3 class="section-title">Revenue Streams</h3>
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th>Payment Method</th>
+                        <th style="text-align: right;">Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for stat in payment_stats %}
+                    <tr>
+                        <td>{{ stat.mode }}</td>
+                        <td style="text-align: right;">{{ stat.total }}</td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="2">No data available.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Global Product Management -->
+    <div class="data-section">
+        <h3 class="section-title">Global Asset Management</h3>
+        <div class="table-responsive">
+            <table class="admin-table" id="products-table">
+                <thead>
+                    <tr>
+                        <th onclick="sortTable('products-table', 0)">Product ⬍</th>
+                        <th onclick="sortTable('products-table', 1)">Seller ⬍</th>
+                        <th onclick="sortTable('products-table', 2, true)">Price ⬍</th>
+                        <th onclick="sortTable('products-table', 3, true)">Total Sales ⬍</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for product in products %}
+                    <tr>
+                        <td>{{ product.name }}</td>
+                        <td>{{ product.seller_name or 'System' }}</td>
+                        <td>{{ product.price }}</td>
+                        <td>
+                            <div class="bar-container">
+                                <div class="visual-bar bar-cyan"
+                                    style="width: {{ (product.total_sales / max_sales) * 100 if max_sales > 0 else 0 }}%;">
+                                </div>
+                                <span class="bar-value">{{ product.total_sales }}</span>
+                            </div>
+                        </td>
+                        <td>
+                            <a href="{{ url_for('admin.delete_product', product_id=product.id) }}"
+                                class="action-btn btn-delete">[PURGE]</a>
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="5">No assets found in database.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Seller Registry -->
+        <div class="data-section">
+            <h3 class="section-title">Agent Registry</h3>
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th>Username</th>
+                        <th>Role</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for seller in sellers %}
+                    <tr>
+                        <td>{{ seller.username }}</td>
+                        <td>{{ seller.role }}</td>
+                        <td>
+                            <a href="{{ url_for('admin.delete_user', user_id=seller._id) }}"
+                                class="action-btn btn-delete">[TERMINATE]</a>
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="3">No active agents found.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+    <script src="{{ url_for('static', filename='js/admin.js') }}"></script>
+    {% endblock %}

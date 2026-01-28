@@ -7,7 +7,7 @@
 
 <div class="product-grid">
     {% for product in products %}
-    <a href="{{ url_for('product_detail', product_id=product.id) }}" class="product-card">
+    <a href="{{ url_for('shop.product_detail', product_id=product.id) }}" class="product-card">
         {% if product.type %}
         <span class="product-tag">{{ product.type }}</span>
         {% endif %}

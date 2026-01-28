@@ -8,3 +8,35 @@ wheels/
 
 # Virtual environments
 .venv
+.env
+
+# Operating System
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# IDEs and Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Testing and Quality Assurance
+.coverage
+htmlcov/
+.pytest_cache/
+.mypy_cache/
+
+# Logs
+*.log
+celerybeat-schedule
+celerybeat.pid
+
+# Flask
+instance/
+.webassets-cache
+
+# Project specific
+data.json
+migrate_data.py
+create_admin.py

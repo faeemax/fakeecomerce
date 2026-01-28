@@ -1,0 +1,57 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div style="max-width: 1000px; margin: 50px auto; color: white;">
+    <h1 style="text-align: center; margin-bottom: 40px;" class="glitch" data-text="ADMIN DASHBOARD">ADMIN DASHBOARD</h1>
+
+    <div
+        style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 40px;">
+        <div style="background: rgba(0,255,0,0.1); padding: 20px; border: 1px solid #0f0; text-align: center;">
+            <h3>Total Revenue</h3>
+            <p style="font-size: 2rem; font-weight: bold;">{{ total_revenue }}</p>
+        </div>
+        <div style="background: rgba(0,255,0,0.1); padding: 20px; border: 1px solid #0f0; text-align: center;">
+            <h3>Total Orders</h3>
+            <p style="font-size: 2rem; font-weight: bold;">{{ total_orders }}</p>
+        </div>
+        <div style="padding: 20px; text-align: center; display: flex; align-items: center; justify-content: center;">
+            <a href="{{ url_for('add_product') }}"
+                style="background: #0f0; color: black; padding: 15px 30px; text-decoration: none; font-weight: bold; font-size: 1.2rem;">ADD
+                PRODUCT &rarr;</a>
+        </div>
+    </div>
+
+    <div style="background: rgba(0,0,0,0.8); padding: 20px; border: 1px solid #333;">
+        <h3>Recent Transactions</h3>
+        <table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
+            <thead>
+                <tr style="text-align: left; border-bottom: 1px solid #555;">
+                    <th style="padding: 10px;">ID</th>
+                    <th style="padding: 10px;">Items</th>
+                    <th style="padding: 10px;">Total</th>
+                    <th style="padding: 10px;">Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in orders %}
+                <tr style="border-bottom: 1px solid #333;">
+                    <td style="padding: 10px;">{{ order._id }}</td>
+                    <td style="padding: 10px;">{{ order.items|length }} items</td>
+                    <td style="padding: 10px;">{{ order.total }}</td>
+                    <td style="padding: 10px;">{{ order.date }}</td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="4" style="padding: 20px; text-align: center; color: #888;">No data found in the matrix.
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div style="margin-top: 20px; text-align: right;">
+            <a href="{{ url_for('logout') }}" style="color: red;">Disconnect (Logout)</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

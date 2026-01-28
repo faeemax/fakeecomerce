@@ -19,7 +19,7 @@
             Stock: {{ product.stock }} | Type: {{ product.type }}
         </p>
 
-        <form action="{{ url_for('add_to_cart', product_id=product.id) }}" method="POST">
+        <form action="{{ url_for('shop.add_to_cart', product_id=product.id) }}" method="POST">
             {% if product.stock != 0 %}
             <button type="submit" name="action" value="add" class="btn-buy">Add to Cart 🛒</button>
             <button type="submit" name="action" value="buy" class="btn-buy"

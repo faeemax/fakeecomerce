@@ -19,7 +19,7 @@
                 <td>{{ item.name }}</td>
                 <td>{{ item.price }} {{ store.currency }}</td>
                 <td>
-                    <form action="{{ url_for('remove_from_cart', product_id=item.id) }}" method="POST"
+                    <form action="{{ url_for('shop.remove_from_cart', product_id=item.id) }}" method="POST"
                         style="display:inline;">
                         <button type="submit"
                             style="background: red; color: white; border: 2px solid #000; cursor: pointer; padding: 5px 10px;">X</button>
@@ -36,7 +36,7 @@
 
     <div style="margin-top: 50px; background: var(--card-bg); padding: 30px; border-radius: 15px;">
         <h2>Select Method of Payment</h2>
-        <form action="{{ url_for('checkout') }}" method="POST">
+        <form action="{{ url_for('shop.checkout') }}" method="POST">
             {% for mode in store.payment_modes %}
             <div style="margin: 10px 0;">
                 <input type="radio" id="{{ mode }}" name="payment_mode" value="{{ mode }}" required checked>
